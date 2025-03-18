@@ -1,37 +1,20 @@
-Algorithm Implementations
-1. Ant Colony Optimization (ACO)
-Simple Version: Sequential implementation in ACO_simple.py
-Multi-processing Version: Parallel implementation in ACO_multiprogress.py for improved performance
-Features: Random node generation, pheromone matrix calculation, path construction and visualization
-2. Nearest Neighbor Algorithm (NNA)
-Simple heuristic approach for path planning
-Fast computation but suboptimal results
-3. K-Means Clustering
-Used for grouping waypoints into clusters
-Can help simplify complex path planning problems
-4. Artificial Potential Field (APF)
-Obstacle avoidance-based path planning
-Creates virtual forces to guide UAV navigation
-5. Genetic Algorithm (MATLAB)
-Population-based optimization for path planning
-Implements selection, crossover and mutation operations
+# 固定目标求最优解
+## 事先运行程序生成地图，存入内存当中
+产生的数据包括：自动获取cpu核心数 threadnum
+生成threadnunm个数据地图，尺寸为leng*wid,给出节点密度和节点个数两个参数，进行调节时可以分别对这两个参数进行调整。生成的地图存入内存即可，不需要单独存储。
+## 然后进行六边形栅格规划，规划的目的是搞清楚每个节点存在与哪个六边形栅格中，并搞清楚每个六边形栅格中的节点个数
+规划完成后可以得到各个节点所在的节点位置，该位置使用六边形栅格坐标表示，由于六边形栅格边界为六边形，所以节点所在坐标位置界定需要程序识别。
+可以注意到，现在出现的元素包括六边形栅格与节点两种，这两种元素通过地图坐标进行连结，预设类三种，map,point,grid，map类需要包含六边形栅格坐标与平面直角坐标两种。
+## 算法模块
+统一算法模块接口，传入接口包括map，point，grid三种类的参数，map下存储若干point和gird数据。
+得到遍历路线后存入map类中。由于可以运行多种算法，因此map类中应当留出多种算法的路径存储。
+## 评估性能
+在每一种算法运行结束后对算法的运行时间和所得路径进行评估，评估对象为简单遍历得到的基本值，基本值为固定值，通过研究所得数值与基本值的比例求出结果。
+## 得到结果后存储并绘图
+绘图内容包括：挑选最好的结果与最坏的结果进行展示，计算出平均值与中位数。
+在程序开始运行前以当前时间新建文件夹，在算法运行结束后将数据存入文件夹，并按照一定规律给出解释。
 
-python-uav/
-├── algorithm/             # Core algorithm implementations
-│   ├── ACO_simple.py      # Ant Colony Optimization (basic)
-│   ├── ACO_multiprogress.py  # Parallel Ant Colony Optimization
-│   ├── APF.py             # Artificial Potential Field
-│   ├── kmeans.py          # K-means clustering
-│   ├── NNA.py             # Nearest Neighbor Algorithm
-│   └── ok_path.py         # Path validation
-├── charts/                # Visualization tools
-│   ├── draw.py            # Main visualization interface
-│   ├── kmeans.py          # K-means visualization
-│   ├── NNA.py             # NNA visualization
-│   └── *.ipynb            # Jupyter notebooks for analysis
-└── result/                # Output images and data
-    └── *.png              # Result visualizations
-
-matlab-uav/
-├── allinone.m             # Comprehensive MATLAB implementation
-└── README.md              # MATLAB project documentation
+# 设计类图
+在整个算法流程中需要三个类，map，point，grid以map为主类，其余两个类为数据类。
+map中的points与grid都需要存储哪些数据？
+首先要明确map与points，grids的功能界限，很明显。
