@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-    <settings>
-        <variable name="var1">value1</variable>
-        <variable name="var2">value2</variable>
-        <variable name="var3">value3</variable>
-    </settings>
-</configuration>
