@@ -22,7 +22,6 @@ class Map:
             hex_size: float - 六边形栅格大小
         """
 
-
         self.length = length
         self.width = width
         self.hex_size = hex_size
@@ -43,5 +42,8 @@ class Map:
         # 确定栅格尺寸
         self._calculate_grid_dimensions()
     
-    def generate_nodes(self.length, self.width, n):
-        return [(np.random.uniform(0, a), np.random.uniform(0, b)) for _ in range(n)]
+    def generate_nodes():
+        return [(np.random.uniform(0, self.length), np.random.uniform(0, self.width)) for _ in range(n)]
+
+    def generate_points(self, n):
+        
