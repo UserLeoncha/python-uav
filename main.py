@@ -1,4 +1,4 @@
-from model import map
+from model import Map
 
 def main():
     

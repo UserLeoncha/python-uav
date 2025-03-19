@@ -30,20 +30,18 @@ class Map:
         
         # 存储数据
         self.points = []
-        self.grids = {(0,0)}  # 使用字典存储栅格，键为(q, r)坐标
+        self.grids = {(0,0)}  # 使用字典存储栅格，键为(q, r)坐标建模方向向右上角
         
         # 存储算法路径结果
         self.paths = {}
         self.performance = {}
         
         # 生成随机点
-        self.generate_points(1000)
+        self.generate_nodes(self.point_num)
 
         # 确定栅格尺寸
         self._calculate_grid_dimensions()
     
-    def generate_nodes():
-        return [(np.random.uniform(0, self.length), np.random.uniform(0, self.width)) for _ in range(n)]
-
-    def generate_points(self, n):
-        
+        def generate_nodes(self, n):
+            self.points = [Point(np.random.uniform(0, self.length), np.random.uniform(0, self.width)) for _ in range(n)]
+            return self.points
