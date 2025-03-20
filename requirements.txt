@@ -23,5 +23,3 @@ seaborn>=0.11.0
 
 # 其他工具库
 tqdm>=4.62.0  # 进度条
-
-multiprocessing
