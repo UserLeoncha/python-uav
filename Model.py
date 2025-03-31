@@ -10,7 +10,7 @@ class Map:
     """
     地图类，包含点和六边形栅格，是整个系统的主要类
     """
-    def __init__(self, length=100, width=100, hex_size=5, point_num=1000):
+    def __init__(self, length=100, width=100, grid_size=5, point_num=1000):
         """
         初始化地图
 
@@ -21,31 +21,37 @@ class Map:
         """
         self.length = length
         self.width = width
-        self.hex_size = hex_size
+        self.grid_size = grid_size
         self.density = None  # 点的密度函数，暂时为0
         self.point_num = point_num
 
         # 存储数据
         self.points = []
-        self.grids = {(0, 0)}  # 使用字典存储栅格
+        self.grids = {}  # 使用字典存储栅格
 
         # 存储算法路径结果
         self.paths = {}
         self.performance = {}
 
         # 生成随机点
-        self.generate_nodes(self.point_num)
-
-        # 确定栅格尺寸
-        # self._calculate_grid_dimensions()
-
-    def generate_nodes(self, n):
         self.points = [
             Point(np.random.uniform(0, self.length), np.random.uniform(0, self.width))
             for _ in range(n)
         ]
-        return self.points
-    
+
+        """
+        计算栅格尺寸
+        """
+        gridwidth = self.hex_size * 1.5
+        gridheight = self.hex_size * np.sqrt(3)
+        self.grid_width = int(np.ceil(self.length / self.hex_size))
+        self.grid_height = int(np.ceil(self.width / self.hex_size * np.sqrt(3) / 2))
+
+        # 初始化六边形栅格，并将节点分配到栅格中，使用栅格坐标进行索引，每个栅格有两个坐标，平面直角坐标系坐标与栅格坐标系坐标
+        for q in range(0, self.grid_width + 1):
+            for r in range(-self.grid_height, self.grid_height + 1):
+                self.grids[(q, r)] = Grid(q, r, self.hex_size)
+
 class Point:
     """
     节点类，表示地图中的一个点
@@ -141,3 +147,4 @@ class Grid:
         返回当前栅格的字符串表示
         """
         return f"Grid(q={self.q}, r={self.r}, center={self.center}, points={len(self.points)})"
+    
